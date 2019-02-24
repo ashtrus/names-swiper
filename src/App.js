@@ -46,6 +46,7 @@ export default class App extends Component<Props> {
             renderItem={this.renderCard}
             onSwipeRight={this.swipeRight}
             onSwipeLeft={this.swipeLeft}
+            renderEmpty={this.renderEmpty}
           />
         </View>
       </Container>
@@ -78,6 +79,10 @@ export default class App extends Component<Props> {
 
   swipeRight = () => {
     console.log("RIGHT");
+  };
+
+  renderEmpty = () => {
+    console.log("LIST IS EMPTY.");
   };
 }
 
