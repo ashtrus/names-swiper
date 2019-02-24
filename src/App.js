@@ -23,9 +23,11 @@ import {
   ListItem,
   Separator,
   Text,
+  Title,
   Thumbnail,
   View
 } from "native-base";
+import names from "./names";
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -33,7 +35,7 @@ export default class App extends Component<Props> {
     super(props);
 
     this.state = {
-      namesList: ["Nathaniel Clyne"],
+      namesList: names,
       cards: [
         {
           text: "Card 1",
@@ -50,14 +52,19 @@ export default class App extends Component<Props> {
           name: "Eve",
           image: require("../assets/img/monkey.jpg")
         }
-      ]
+      ],
+      namesSelected: []
     };
   }
 
   render() {
     return (
       <Container>
-        <Header />
+        <Header style={{ backgroundColor: "lavender" }}>
+          <Body>
+            <Title>Names Swiper</Title>
+          </Body>
+        </Header>
         <Content padder>
           <View>
             <DeckSwiper
@@ -103,8 +110,8 @@ export default class App extends Component<Props> {
   };
 
   swipeRight = ({ name }) => {
-    const { namesList } = this.state;
-    this.setState({ namesList: [...namesList, name] });
+    const { namesSelected } = this.state;
+    this.setState({ namesSelected: [...namesSelected, name] });
   };
 
   renderEmpty = () => {
@@ -112,7 +119,7 @@ export default class App extends Component<Props> {
   };
 
   renderNamesList = () => (
-    <FlatList data={this.state.namesList} keyExtractor={this.keyExtractor} renderItem={this.renderNameItem} />
+    <FlatList data={this.state.namesSelected} keyExtractor={this.keyExtractor} renderItem={this.renderNameItem} />
   );
 
   keyExtractor = item => item;
