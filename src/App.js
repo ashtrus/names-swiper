@@ -8,47 +8,78 @@
  */
 
 import React, { Component } from "react";
-import { Image, Platform, StyleSheet } from "react-native";
-import { Container, Header, View, DeckSwiper, Card, CardItem, Thumbnail, Text, Left, Body, Icon } from "native-base";
+import { FlatList, Image, Platform, StyleSheet } from "react-native";
+import {
+  Body,
+  Card,
+  CardItem,
+  Container,
+  Content,
+  DeckSwiper,
+  Header,
+  Icon,
+  Left,
+  List,
+  ListItem,
+  Separator,
+  Text,
+  Thumbnail,
+  View
+} from "native-base";
 
 const instructions = Platform.select({
   ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
   android: "Double tap R on your keyboard to reload,\n" + "Shake or press menu button for dev menu"
 });
 
-const cards = [
-  {
-    text: "Card 1",
-    name: "1",
-    image: require("../assets/img/monkey.jpg")
-  },
-  {
-    text: "Card 2",
-    name: "2",
-    image: require("../assets/img/monkey.jpg")
-  },
-  {
-    text: "Card 3",
-    name: "3",
-    image: require("../assets/img/monkey.jpg")
-  }
-];
-
 type Props = {};
 export default class App extends Component<Props> {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      namesList: ["Nathaniel Clyne"],
+      cards: [
+        {
+          text: "Card 1",
+          name: "John",
+          image: require("../assets/img/monkey.jpg")
+        },
+        {
+          text: "Card 2",
+          name: "Adam",
+          image: require("../assets/img/monkey.jpg")
+        },
+        {
+          text: "Card 3",
+          name: "Eve",
+          image: require("../assets/img/monkey.jpg")
+        }
+      ]
+    };
+  }
+
   render() {
     return (
       <Container>
         <Header />
-        <View>
-          <DeckSwiper
-            dataSource={cards}
-            renderItem={this.renderCard}
-            onSwipeRight={this.swipeRight}
-            onSwipeLeft={this.swipeLeft}
-            renderEmpty={this.renderEmpty}
-          />
-        </View>
+        <Content padder>
+          <View>
+            <DeckSwiper
+              dataSource={this.state.cards}
+              renderItem={this.renderCard}
+              onSwipeRight={this.swipeRight}
+              onSwipeLeft={this.swipeLeft}
+              renderEmpty={this.renderEmpty}
+            />
+          </View>
+          <View style={{ marginTop: 450 }}>
+            <Separator bordered>
+              <Text>NAMES SELECTED:</Text>
+            </Separator>
+            {this.renderNamesList()}
+          </View>
+        </Content>
       </Container>
     );
   }
@@ -60,7 +91,6 @@ export default class App extends Component<Props> {
           <Thumbnail source={image} />
           <Body>
             <Text>{text}</Text>
-            <Text note>NativeBase</Text>
           </Body>
         </Left>
       </CardItem>
@@ -73,17 +103,30 @@ export default class App extends Component<Props> {
     </Card>
   );
 
-  swipeLeft = () => {
-    console.log("LEFT");
+  swipeLeft = ({ name }) => {
+    console.log("REMOVED", name);
   };
 
-  swipeRight = () => {
-    console.log("RIGHT");
+  swipeRight = ({ name }) => {
+    const { namesList } = this.state;
+    this.setState({ namesList: [...namesList, name] });
   };
 
   renderEmpty = () => {
     console.log("LIST IS EMPTY.");
   };
+
+  renderNamesList = () => (
+    <FlatList data={this.state.namesList} keyExtractor={this.keyExtractor} renderItem={this.renderNameItem} />
+  );
+
+  keyExtractor = item => item;
+
+  renderNameItem = ({ item }) => (
+    <ListItem>
+      <Text>{item}</Text>
+    </ListItem>
+  );
 }
 
 const styles = StyleSheet.create({});
