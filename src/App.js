@@ -43,30 +43,42 @@ export default class App extends Component<Props> {
         <View>
           <DeckSwiper
             dataSource={cards}
-            renderItem={item => (
-              <Card style={{ elevation: 3 }}>
-                <CardItem>
-                  <Left>
-                    <Thumbnail source={item.image} />
-                    <Body>
-                      <Text>{item.text}</Text>
-                      <Text note>NativeBase</Text>
-                    </Body>
-                  </Left>
-                </CardItem>
-                <CardItem cardBody>
-                  <Image style={{ height: 300, flex: 1 }} source={item.image} />
-                </CardItem>
-                <CardItem>
-                  <Text>{item.name}</Text>
-                </CardItem>
-              </Card>
-            )}
+            renderItem={this.renderCard}
+            onSwipeRight={this.swipeRight}
+            onSwipeLeft={this.swipeLeft}
           />
         </View>
       </Container>
     );
   }
+
+  renderCard = ({ image, name, text }) => (
+    <Card style={{ elevation: 3 }}>
+      <CardItem>
+        <Left>
+          <Thumbnail source={image} />
+          <Body>
+            <Text>{text}</Text>
+            <Text note>NativeBase</Text>
+          </Body>
+        </Left>
+      </CardItem>
+      <CardItem cardBody>
+        <Image style={{ height: 300, flex: 1 }} source={image} />
+      </CardItem>
+      <CardItem>
+        <Text>{name}</Text>
+      </CardItem>
+    </Card>
+  );
+
+  swipeLeft = () => {
+    console.log("LEFT");
+  };
+
+  swipeRight = () => {
+    console.log("RIGHT");
+  };
 }
 
 const styles = StyleSheet.create({});
