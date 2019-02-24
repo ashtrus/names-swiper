@@ -1,0 +1,33 @@
+{
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "plugin:prettier/recommended"
+    ],
+    "plugins": [
+        "import",
+        "jest",
+        "jsx-a11y",
+        "no-only-tests",
+        "react-native",
+        "react",
+        "react-native"
+    ],
+    "env": {
+        "browser": true,
+        "jest": true,
+        "es6": true
+    },
+    "rules": {
+        "prettier/prettier": [
+            "error", {"printWidth": 120}
+        ]
+    }
+}
